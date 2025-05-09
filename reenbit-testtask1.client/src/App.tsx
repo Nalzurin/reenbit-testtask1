@@ -5,7 +5,7 @@ import type INotificationParams from './Interfaces/INotificationParams';
 export default function App() {
     const [messages, setMessages] = useState<IChatMessage[]>([]);
     const [user, setUser] = useState("");
-    const [currentMessage, setCurrentMEssage] = useState("");
+    const [currentMessage, setCurrentMessage] = useState("");
     const [notification, setNotification] = useState<INotificationParams>(
         {
             text: "",
