@@ -15,12 +15,17 @@
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
       <Version>9.*-*</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Azure.SignalR" Version="1.30.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\reenbit-testtask1.client\reenbit-testtask1.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>
