@@ -1,0 +1,6 @@
+@reenbit_testtask1.Server_HostAddress = http://localhost:5163
+
+GET {{reenbit_testtask1.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
