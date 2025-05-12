@@ -1,8 +1,8 @@
 import type INotificationParams from "../Interfaces/INotificationParams";
 
 export default function Notification({ text, error} : INotificationParams) {
-    if (text === null) {
-        console.log("Message null");
+    if (text == "") {
+        console.log("Message empty");
         return null;
     }
     console.log("Notification Message: ", text);

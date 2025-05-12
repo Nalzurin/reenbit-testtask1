@@ -5,10 +5,11 @@ export default function UseSignalR(url: string) {
 
     useEffect(() => {
         const connectionBuilder = new signalR.HubConnectionBuilder();
-        connectionBuilder.withUrl(url);
-        connectionBuilder.configureLogging(signalR.LogLevel.Information)
+        connectionBuilder.withUrl(url, { skipNegotiation: true, transport: signalR.HttpTransportType.WebSockets });
+        connectionBuilder.configureLogging(signalR.LogLevel.Debug);
+        connectionBuilder.withAutomaticReconnect();
         const connection = connectionBuilder.build();
-        const tryStart = () => {
+        async function tryStart(){
             connection.start()
                 .then(() => {
 
@@ -29,7 +30,6 @@ export default function UseSignalR(url: string) {
                 })
                 .catch((error) => {
                     console.log(error);
-                    tryStart();
                 });
         }
         tryStart();
