@@ -2,6 +2,7 @@ import './App.css';
 import { useState } from 'react';
 import type IChatMessage from './Interfaces/IChatMessage';
 import type INotificationParams from './Interfaces/INotificationParams';
+import UseSignalR from './Services/SignalRService';
 export default function App() {
     const [messages, setMessages] = useState<IChatMessage[]>([]);
     const [user, setUser] = useState("");
@@ -11,12 +12,20 @@ export default function App() {
             text: "",
             error: false,
         });
+    const signalRHub = UseSignalR("/chatroom");
+    signalRHub?.on("broadcastMessage", ({ user, message }: IChatMessage)  => {
+        // Listen to "broadcastMessage" on hub
+        handleAddMessage({ user, message });
+    })
+    function handleAddMessage({ user, message }: IChatMessage){
+        setMessages([...messages, { user, message }]);
+    }
     const handleSubmit = ({ user, message }: IChatMessage) => {
         if (signalRHub === null) {
             setNotification({ text: "Can't submit message, connection is null", error: true });
         }
         else {
-            signalRHub.invoke("SendMessage", user, message)
+            signalRHub.invoke("broadcastMessage", user, message)
                 .catch((error) => {
                     setNotification({ text: "Can't send message: " + error, error: true });
                 })
