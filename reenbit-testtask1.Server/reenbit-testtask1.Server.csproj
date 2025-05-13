@@ -8,6 +8,8 @@
     <SpaRoot>..\reenbit-testtask1.client</SpaRoot>
     <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost:53398</SpaProxyServerUrl>
+    <UserSecretsId>47cf257e-039f-48b4-ab6b-3e825d852a6f</UserSecretsId>
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,4 +30,7 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Hubs\" />
+  </ItemGroup>
 </Project>

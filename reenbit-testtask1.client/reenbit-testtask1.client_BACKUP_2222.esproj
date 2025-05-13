@@ -8,7 +8,10 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist</BuildOutputFolder>
   </PropertyGroup>
+<<<<<<< Updated upstream
+=======
   <ItemGroup>
-    <Folder Include="src\Services\" />
+    <Folder Include="src\Interfaces\" />
   </ItemGroup>
+>>>>>>> Stashed changes
 </Project>

@@ -18,12 +18,16 @@ namespace reenbit_testtask1.Server
             var app = builder.Build();
 
             app.UseDefaultFiles();
-            app.MapStaticAssets();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
+                app.UseCors(x => x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .SetIsOriginAllowed(origin => true) // allow any origin
+    .AllowCredentials()); // allow credentials
             }
 
             app.UseHttpsRedirection();
@@ -32,7 +36,7 @@ namespace reenbit_testtask1.Server
 
 
             app.MapControllers();
-            app.MapHub<ChatRoomHub>("/chatroom");
+            app.MapHub<ChatRoomHub>("/chatRoomHub");
             app.MapFallbackToFile("/index.html");
 
             app.Run();
