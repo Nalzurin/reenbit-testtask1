@@ -8,7 +8,7 @@ namespace reenbit_testtask1.Server
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddSignalR();
+            builder.Services.AddSignalR().AddAzureSignalR();
             // Add services to the container.
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
