@@ -1,5 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
 using reenbit_testtask1.Server.Hubs;
+using System;
 
 namespace reenbit_testtask1.Server
 {
@@ -13,8 +15,13 @@ namespace reenbit_testtask1.Server
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+            if (builder.Environment.IsDevelopment())
+            {
+                builder.Configuration.AddUserSecrets<Program>();
+            }
 
-
+            builder.Services.AddDbContext<ReenbitTaskChatroomDatabaseContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             var app = builder.Build();
 
             app.UseDefaultFiles();
@@ -29,6 +36,7 @@ namespace reenbit_testtask1.Server
     .SetIsOriginAllowed(origin => true) // allow any origin
     .AllowCredentials()); // allow credentials
             }
+
 
             app.UseHttpsRedirection();
 
