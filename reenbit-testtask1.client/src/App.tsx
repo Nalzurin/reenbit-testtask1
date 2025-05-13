@@ -14,8 +14,15 @@ export default function App() {
             error: false,
         });
     const signalRHub = UseSignalR("https://localhost:7184/chatRoomHub");
-    signalRHub?.on("ReceiveMessage", (user : string, message: string) => {
+    signalRHub?.on("broadcastMessage", (user : string, message: string) => {
         // Listen to "broadcastMessage" on hub
+        setNotification({ text: "Got message", error: false });
+        setTimeout(() => {
+            setNotification({
+                text: "",
+                error: false,
+            });
+        }, 5000);
         handleAddMessage(user, message);
     })
     function handleAddMessage(user: string, message: string) {
@@ -46,6 +53,10 @@ export default function App() {
                             error: false,
                         });
                     }, 5000);
+                })
+                .then(() => {
+                    setCurrentMessage("");
+
                 })
         }
 
