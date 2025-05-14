@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,14 +20,13 @@ namespace reenbit_testtask1.Server.Controllers
 
         // GET: api/<ValuesController>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ChatRoomDatabase>>> GetMessages()
+        public async Task<ActionResult<IEnumerable<ChatRoomDatabase>>> GetMessages(int? skip, int? take)
         {
+            if (skip != null && take != null)
+            {
+                return await _context.ChatRoomDatabases.OrderBy(e=>e.SentAt).Skip((int)skip).Take((int)take).ToListAsync();
+            }
             return await _context.ChatRoomDatabases.ToListAsync();
-        }
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ChatRoomDatabase>>> GetMessages(int skip = 0, int take = 25)
-        {
-            return await _context.ChatRoomDatabases.Skip(skip).Take(take).ToListAsync();
         }
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
