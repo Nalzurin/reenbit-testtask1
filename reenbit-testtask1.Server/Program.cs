@@ -15,6 +15,7 @@ namespace reenbit_testtask1.Server
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+
             if (builder.Environment.IsDevelopment())
             {
                 builder.Configuration.AddUserSecrets<Program>();
@@ -22,6 +23,7 @@ namespace reenbit_testtask1.Server
 
             builder.Services.AddDbContext<ReenbitTaskChatroomDatabaseContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddSingleton<TextAnalysisService>();
             var app = builder.Build();
 
             app.UseDefaultFiles();
