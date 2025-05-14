@@ -31,7 +31,7 @@ export default function App() {
             }));
 
             if (data.length < 25) setHasMore(false);
-            setMessages(prev => [...data, ...prev]);
+            setMessages(prev => [...data.reverse(), ...prev,]);
         } catch (error) {
             console.error("Failed to fetch messages:", error);
             setNotification({ text: "Failed to fetch messages", error: true });
@@ -39,14 +39,25 @@ export default function App() {
         }
     }
     useEffect(() => {
-        if (!signalRHub) return;
+        if (containerRef.current !== null) {
+            containerRef.current.scrollTop = containerRef.current.scrollHeight;
+        }
+    }, [messages]);
+    useEffect(() => {
+        console.log(signalRHub);
+        if (signalRHub === null) {
+            return;
+        }
+
 
         const handleBroadcastMessage = (message: IChatMessage) => {
+            console.log(message);
             setNotification({ text: "Got message", error: false });
+            handleAddMessage(message);
             setTimeout(() => {
                 setNotification({ text: "", error: false });
             }, 5000);
-            handleAddMessage(message);
+
         };
 
         signalRHub.on("broadcastMessage", handleBroadcastMessage);
@@ -113,7 +124,7 @@ export default function App() {
     }
     else {
         return (
-            <div className="max-w-2xl mx-auto p-6 space-y-4 bg-zinc-900 text-white min-h-screen flex flex-col ">
+            <div className="max-w-4xl mx-auto p-6 space-y-4 bg-zinc-900 text-white min-h-screen flex flex-col ">
                 <div className="grow-0 shrink-0">
                     <Notification {...notification} />
                 </div>

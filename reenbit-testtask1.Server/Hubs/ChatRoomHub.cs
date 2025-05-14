@@ -21,12 +21,9 @@ namespace reenbit_testtask1.Server.Hubs
             };
 
             var result = _context.ChatRoomDatabases.Add(msg);
+            Console.WriteLine(result.Entity.MessageId);
             await _context.SaveChangesAsync();
             await Clients.All.SendAsync("broadcastMessage", result.Entity);
         }
-
-        public Task Echo(string name, string message) =>
-            Clients.Client(Context.ConnectionId)
-                    .SendAsync("echo", name, $"{message} (echo from server)");
     }
 }

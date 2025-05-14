@@ -24,7 +24,7 @@ namespace reenbit_testtask1.Server.Controllers
         {
             if (skip != null && take != null)
             {
-                return await _context.ChatRoomDatabases.OrderBy(e=>e.SentAt).Skip((int)skip).Take((int)take).ToListAsync();
+                return await _context.ChatRoomDatabases.OrderByDescending(e=>e.SentAt).Skip((int)skip).Take((int)take).ToListAsync();
             }
             return await _context.ChatRoomDatabases.ToListAsync();
         }
