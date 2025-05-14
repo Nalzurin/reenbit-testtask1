@@ -1,0 +1,23 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace reenbit_testtask1.Server;
+
+public partial class ChatRoomDatabase
+{
+    public int MessageId { get; set; }
+
+    public string Username { get; set; } = null!;
+
+    public string MessageText { get; set; } = null!;
+
+    public DateTime? SentAt { get; set; }
+
+    public string? SentimentLabel { get; set; }
+
+    public double? ScorePositive { get; set; }
+
+    public double? ScoreNeutral { get; set; }
+
+    public double? ScoreNegative { get; set; }
+}

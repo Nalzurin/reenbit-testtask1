@@ -1,6 +1,12 @@
 @reenbit_testtask1.Server_HostAddress = http://localhost:5163
 
-GET {{reenbit_testtask1.Server_HostAddress}}/weatherforecast/
+GET {{reenbit_testtask1.Server_HostAddress}}/api/ChatRoomMessages/2
 Accept: application/json
 
 ###
+POST {{reenbit_testtask1.Server_HostAddress}}/api/ChatRoomMessages
+Content-Type: application/json
+{
+  "username": "Alex",
+  "messageText": "I cooka da meatball!"
+}

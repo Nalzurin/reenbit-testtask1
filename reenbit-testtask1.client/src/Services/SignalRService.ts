@@ -9,7 +9,7 @@ export default function UseSignalR(url: string) {
         connectionBuilder.configureLogging(signalR.LogLevel.Debug);
         connectionBuilder.withAutomaticReconnect();
         const connection = connectionBuilder.build();
-        async function tryStart(){
+        async function tryStart() {
             connection.start()
                 .then(() => {
                     setSignalRHub(connection);
@@ -19,7 +19,12 @@ export default function UseSignalR(url: string) {
                 });
         }
         tryStart();
-
+        return () => {
+            if (connection.state === signalR.HubConnectionState.Connected) {
+                connection.stop();
+                setSignalRHub(null);
+            }
+        };
     }, [url]);
 
     return signalRHub;
