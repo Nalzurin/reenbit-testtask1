@@ -138,7 +138,12 @@ export default function App() {
                                 <div className="text-xs text-zinc-400 mb-1">{new Date(msg.sentAt).toLocaleString()}</div>
                                 <div>
                                     <span className="font-semibold text-blue-400">{msg.username}</span>{' '}
-                                    <span className="text-zinc-100">{msg.messageText}</span>
+                                    <span className="text-zinc-100">{msg.messageText}</span>{' '} 
+                                    {
+                                        msg.sentimentLabel !== null ? (
+                                            <span className="font-semibold text-blue-400">({msg.sentimentLabel})</span>
+                                        ): (null)
+                                    }
                                 </div>
                             </div>
                         ))
