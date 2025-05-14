@@ -1,10 +1,6 @@
 import type INotificationParams from "../Interfaces/INotificationParams";
 
 export default function Notification({ text, error} : INotificationParams) {
-    if (text == "") {
-        console.log("Message empty");
-        return null;
-    }
     console.log("Notification Message: ", text);
     console.log("Fail State: ", error);
     let colorStyle = "white";
@@ -15,7 +11,7 @@ export default function Notification({ text, error} : INotificationParams) {
     }
     const notificationStyle = {
         fontStyle: "italic",
-        fontSize: 16,
+        fontSize: 20,
         borderStyle: "solid",
         borderRadius: 5,
         padding: 10,

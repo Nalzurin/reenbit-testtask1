@@ -113,45 +113,52 @@ export default function App() {
     }
     else {
         return (
-            <>
-                <Notification {...notification} />
-                <div className="max-w-md mx-auto p-4 space-y-4">
-                    <div ref={containerRef} onScroll={handleScroll}
-                        className="border rounded-lg p-4 h-64 overflow-y-auto bg-gray-50 shadow">
-                        {messages.length === 0 ? (<p className="text-gray-400 italic">No messages yet.</p>)
-                            : (messages.map((msg, index) => (<div key={index} className="mb-2">
-                                <span className="font-semibold text-black">{msg.sentAt.toLocaleString()}</span>{' '}
-                                <span className="font-semibold text-blue-600">{msg.username}:</span>{' '}
-                                <span className="font-semibold text-black">{msg.messageText}</span>
+            <div className="max-w-2xl mx-auto p-6 space-y-4 bg-zinc-900 text-white min-h-screen flex flex-col ">
+                <div className="grow-0 shrink-0">
+                    <Notification {...notification} />
+                </div>
+                <div ref={containerRef} onScroll={handleScroll}
+                    className="bg-zinc-800 rounded-lg p-4 h-96 overflow-y-auto shadow-inner space-y-3 border border-zinc-700 grow">
+                    {messages.length === 0 ? (
+                        <p className="text-zinc-400 italic">No messages yet.</p>
+                    ) : (
+                        messages.map((msg, index) => (
+                            <div key={index} className="bg-zinc-700 p-3 rounded-lg hover:bg-zinc-600 transition-colors">
+                                <div className="text-xs text-zinc-400 mb-1">{new Date(msg.sentAt).toLocaleString()}</div>
+                                <div>
+                                    <span className="font-semibold text-blue-400">{msg.username}</span>{' '}
+                                    <span className="text-zinc-100">{msg.messageText}</span>
+                                </div>
                             </div>
-                            ))
-                            )}
-                    </div>
-
+                        ))
+                    )}
+                </div>
+                <div className="flex-none">
                     <input
                         type="text"
                         placeholder="Your name"
                         value={user}
                         onChange={(e) => handleSetUser(e.target.value)}
-                        className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+                        className="w-full bg-zinc-700 text-white border border-zinc-600 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-500"
                     />
-
-                    <textarea
-                        placeholder="Type your message"
-                        value={currentMessage}
-                        onChange={(e) => setCurrentMessage(e.target.value)}
-                        rows={3}
-                        className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 resize-none"
-                    />
-
+                </div>
+                <textarea
+                    placeholder="Type your message"
+                    value={currentMessage}
+                    onChange={(e) => setCurrentMessage(e.target.value)}
+                    rows={3}
+                    className="w-full bg-zinc-700 text-white border border-zinc-600 rounded px-3 py-2 focus:outline-none focus:ring focus:ring-blue-500 resize-none"
+                />
+                <div className="flex-none">
                     <button
                         onClick={handleSend}
-                        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+                        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition font-semibold"
                     >
                         Send
                     </button>
                 </div>
-            </>
+
+            </div>
         );
 
     }
