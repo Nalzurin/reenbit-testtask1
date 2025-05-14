@@ -47,7 +47,7 @@ namespace reenbit_testtask1.Server
 
             app.MapControllers();
             app.MapHub<ChatRoomHub>("/chatRoomHub");
-            app.MapFallbackToFile("/index.html");
+            app.MapFallback(() => "hi!");
 
             app.Run();
         }
