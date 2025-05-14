@@ -5,18 +5,30 @@ import type INotificationParams from './Interfaces/INotificationParams';
 import UseSignalR from './Services/SignalRService';
 import Notification from './Components/Notification';
 export default function App() {
+    //State variables to ensure that they dont reset when rerendered.
+    //Keeps track of loaded messages.
     const [messages, setMessages] = useState<IChatMessage[]>([]);
+    //Keeps track of user name.
     const [user, setUser] = useState("");
+    //Keeps track of the inputted message.
     const [currentMessage, setCurrentMessage] = useState("");
+    //Keeps track of the notification component
     const [notification, setNotification] = useState<INotificationParams>(
         {
             text: "",
             error: false,
         });
+    //Keeps track of how many entries to skip when fetching from the database
     const [skip, setSkip] = useState(0);
+    //Keeps track whether there are more entries that are not yet loaded
     const [hasMore, setHasMore] = useState(true);
+
+    //Reference to the scroll container, needed for infinite scrolling
     const containerRef = useRef<HTMLDivElement>(null);
+
+    //Setting up SignalR
     const signalRHub = UseSignalR("https://reenbit-task-chatroom-backend-epajgnavhxehecfb.canadacentral-01.azurewebsites.net/chatRoomHub");
+    //Fetches starting messages
     useEffect(() => {
         fetchMessages(0);
         setSkip(25);
@@ -27,7 +39,7 @@ export default function App() {
             console.log("Fetched data:", res);
             const data: IChatMessage[] = (await res.json()).map((msg: IChatMessage) => ({
                 ...msg,
-                sentAt: new Date(msg.sentAt) // 👈 now it's actually a Date
+                sentAt: new Date(msg.sentAt) 
             }));
 
             if (data.length < 25) setHasMore(false);
@@ -38,18 +50,18 @@ export default function App() {
             setTimeout(() => setNotification({ text: "", error: false }), 5000);
         }
     }
+    //When messages are changed, sends the scroll bar to the bottom
     useEffect(() => {
         if (containerRef.current !== null) {
             containerRef.current.scrollTop = containerRef.current.scrollHeight;
         }
     }, [messages]);
+    //Handling SignalR hub, connecting the listener function if the hub is connected and disconnecting when changed to prevent duplicate listeners
     useEffect(() => {
         console.log(signalRHub);
         if (signalRHub === null) {
             return;
         }
-
-
         const handleBroadcastMessage = (message: IChatMessage) => {
             console.log(message);
             setNotification({ text: "Got message", error: false });
@@ -57,15 +69,13 @@ export default function App() {
             setTimeout(() => {
                 setNotification({ text: "", error: false });
             }, 5000);
-
         };
-
         signalRHub.on("broadcastMessage", handleBroadcastMessage);
-
         return () => {
             signalRHub.off("broadcastMessage", handleBroadcastMessage);
         };
     }, [signalRHub]);
+
     const handleAddMessage = (message: IChatMessage) => {
         console.log(message.username);
         console.log(message.messageText);
@@ -103,6 +113,7 @@ export default function App() {
 
     }
     const handleSetUser = (newName: string) => { setUser(newName); };
+    //Infinite scrolling
     const handleScroll = () => {
         const container = containerRef.current;
         if (!container || !hasMore) return;

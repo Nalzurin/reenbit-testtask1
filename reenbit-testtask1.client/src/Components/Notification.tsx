@@ -19,5 +19,5 @@ export default function Notification({ text, error} : INotificationParams) {
         color: colorStyle,
     };
 
-    return <div style={ notificationStyle }> { text } </div>;
+    return <div className="shrink-0 grow-0" style={ notificationStyle }> { text } </div>;
 }
