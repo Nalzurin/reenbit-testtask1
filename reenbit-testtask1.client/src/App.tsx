@@ -16,14 +16,14 @@ export default function App() {
     const [skip, setSkip] = useState(0);
     const [hasMore, setHasMore] = useState(true);
     const containerRef = useRef<HTMLDivElement>(null);
-    const signalRHub = UseSignalR("reenbit-task-chatroom-backend-epajgnavhxehecfb.canadacentral-01.azurewebsites.net/chatRoomHub");
+    const signalRHub = UseSignalR("https://reenbit-task-chatroom-backend-epajgnavhxehecfb.canadacentral-01.azurewebsites.net/chatRoomHub");
     useEffect(() => {
         fetchMessages(0);
         setSkip(25);
     }, []);
     const fetchMessages = async (skipAmount: number) => {
         try {
-            const res = await fetch(`reenbit-task-chatroom-backend-epajgnavhxehecfb.canadacentral-01.azurewebsites.net/api/ChatRoomMessages?skip=${skipAmount}&take=25`);
+            const res = await fetch(`https://reenbit-task-chatroom-backend-epajgnavhxehecfb.canadacentral-01.azurewebsites.net/api/ChatRoomMessages?skip=${skipAmount}&take=25`);
             console.log("Fetched data:", res);
             const data: IChatMessage[] = (await res.json()).map((msg: IChatMessage) => ({
                 ...msg,
